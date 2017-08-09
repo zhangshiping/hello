@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">success</button>
+<p>类型：Function，默认：null</p>
+<p>当你需要在层创建完毕时即执行一些语句，可以通过该回调。success会携带两个参数，分别是当前层DOM当前层索引</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                content: '测试回调',
+                success: function(layero, index){
+                    console.log(layero, index);
+                }
+            });
+
+        })
+    })
+</script>
+</html>

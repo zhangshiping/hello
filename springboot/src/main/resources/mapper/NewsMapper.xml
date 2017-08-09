@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.News">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <!--<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+  </resultMap>
+
+  <select id="search" parameterType="com.company.project.model.News" resultMap="BaseResultMap">
+    SELECT  *
+    FROM   news
+    <where>
+      1=1
+      <if test="title!= null">
+        and  title  LIKE  concat('%',#{title},'%')
+      </if>
+      <if test="updateTimeMin!= null">
+        and  updateTime &gt;= #{updateTimeMin}
+      </if>
+      <if test="updateTimeMax!= null">
+        and  updateTime &lt;=  #{updateTimeMax}
+      </if>
+    </where>
+  </select>
+</mapper>

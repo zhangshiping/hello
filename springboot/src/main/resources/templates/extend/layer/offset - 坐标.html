@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">offset</button>
+<p>类型：String/Array，默认：垂直水平居中
+
+    offset默认情况下不用设置。但如果你不想垂直水平居中，你还可以进行以下赋值：</p>
+<pre>
+    值	               备注
+    offset: '100px'	只定义top坐标，水平保持居中
+    offset: ['100px', '50px']	同时定义top、left坐标
+    offset: 't'	快捷设置顶部坐标
+    offset: 'r'	快捷设置右边缘坐标
+    offset: 'b'	快捷设置底部坐标
+    offset: 'l'	快捷设置左边缘坐标
+    offset: 'lt'	快捷设置左上角
+    offset: 'lb'	快捷设置左下角
+    offset: 'rt'	快捷设置右上角
+    offset: 'rb'	快捷设置右下角
+</pre>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                type:1,
+                offset:['100px','50px']
+            })
+        })
+    })
+</script>
+</html>

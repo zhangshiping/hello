@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">cancel</button>
+<p>类型：Function，默认：null</p>
+<p>该回调携带两个参数，分别为：当前层索引参数（index）、当前层的DOM对象（layero），默认会自动触发关闭。如果不想关闭，return false即可</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                content: '测试回调',
+                cancel: function(index, layero){
+                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        layer.close(index)
+                    }
+                    return false;
+                }
+            });
+
+        })
+    })
+</script>
+</html>

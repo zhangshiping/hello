@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">btn</button>
+<button id="test1">btn1</button>
+<p>类型：String/Array，默认：'确认'</p>
+<p>信息框模式时，btn默认是一个确认按钮，其它层类型则默认不显示，加载层和tips层则无效。</p>
+<p>当您只想自定义一个按钮时，你可以btn: '我知道了'，当你要定义两个按钮时，你可以btn: ['yes', 'no']。</p>
+<p>当然，你也可以定义更多按钮，比如：btn: ['按钮1', '按钮2', '按钮3', …]，按钮1的回调是yes，而从按钮2开始，则回调为btn2: function(){}，以此类推。如：</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            //eg1
+            layer.confirm('纳尼？', {
+                btn: ['按钮一', '按钮二', '按钮三'] //可以无限个按钮
+                ,btn3: function(index, layero){
+                    //按钮【按钮三】的回调
+                    alert("第三个按钮")
+                }
+            }, function(index, layero){
+                alert("第1个按钮")
+                //按钮【按钮一】的回调
+            }, function(index){
+                alert("第2个按钮")
+                //按钮【按钮二】的回调
+            });
+        })
+        $("#test1").on("click",function(){
+            //eg2
+            layer.open({
+                content: 'test'
+                ,btn: ['按钮一', '按钮二', '按钮三'],
+                yes: function(index, layero){
+                    //按钮【按钮一】的回调
+                    alert("第一个按钮");
+                },
+                btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    alert("第2个按钮");
+                    //return false 开启该代码可禁止点击该按钮关闭
+                },
+                btn3: function(index, layero){
+                    //按钮【按钮三】的回调
+                    alert("第3个按钮");
+                    return false;
+                    //return false 开启该代码可禁止点击该按钮关闭
+                },
+                cancel: function(){
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        })
+    })
+</script>
+</html>

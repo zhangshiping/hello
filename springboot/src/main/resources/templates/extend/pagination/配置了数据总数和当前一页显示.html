@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>如果配置了数据总数和当前一页显示多少条数据，总页数会自动计算，这种情况下再配置总页数无效。 </p>
+<p>数据总数totalData和每页显示的条数showData必须同时配置，否则默认使用总页数pageCount</p>
+<div class="M-box1"></div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.pagination.js"></script>
+<script>
+    $('.M-box1').pagination({
+        totalData:100,
+        showData:5,
+        coping:true
+    });
+</script>
+</html>

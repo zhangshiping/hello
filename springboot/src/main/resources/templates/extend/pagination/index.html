@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .preClass,.nextClass{
+            height: 30px;
+            width: 80px;
+            text-align: center;
+            text-decoration: none;
+            line-height: 30px;
+            border-radius: 3px;
+            border: 1px solid #00a9e0;
+            display: inline-block;
+            background-color: #00a9e0;
+        }
+    </style>
+</head>
+<body>
+<div class="pageBox"></div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.pagination.js"></script>
+<script>
+    $(function(){
+        $.get("index.json",function(result){
+            console.log(result.nextContent);
+            $(".pageBox").pagination({
+                prevCls:"preClass",
+                nextCls:"nextClass",
+                pageCount:result.pageCount,
+                totalData:result.totalData,
+                current:result.current,
+                showData:result.showData,
+                prevContent:result.prevContent,
+                nextContent:result.nextContent,
+                activeCls:result.activeCls,
+                count:result.count,
+                coping:result.coping,
+                isHide:result.isHide
+            })
+        })
+    })
+</script>
+</html>

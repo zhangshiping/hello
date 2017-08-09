@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>开始使用Layui</title>
+    <link href="../../css/bootstrap.css" rel="stylesheet"/>
+    <link href="../../assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="../../assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/style.css" rel="stylesheet"/>
+    <link href="../../css/style-responsive.css" rel="stylesheet"/>
+    <link href="../../css/style-default.css" rel="stylesheet" id="style_color"/>
+</head>
+<body style="background-color: white">
+<div class="content">
+    <div class="row">
+        <div class="col-md-3" style="padding-left: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>信息框</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-info" id="test0">信息框</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>小小提示层</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-warning" id="test1">提示</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>弹出一个页面层</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-success" id="test2">页面层</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>弹出一个iframe层</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-info" id="test3">iframe层</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-left: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>弹出一个loading层</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-danger" id="test4">loading</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>弹出一个tips层</h4>
+                    <div class="but-bor"></div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-info" id="test5">tips层</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--&lt;!&ndash;信息框&ndash;&gt;-->
+<!--<button id="test0">信息框</button>-->
+<!--&lt;!&ndash;提示层&ndash;&gt;-->
+<!--<button id="test1">小小提示层</button>-->
+<!--&lt;!&ndash;弹出一个页面层&ndash;&gt;-->
+<!--<button id="test2">弹出一个页面层</button>-->
+<!--&lt;!&ndash;弹出一个iframe层&ndash;&gt;-->
+<!--<button  id="test3">弹出一个iframe层</button>-->
+<!--&lt;!&ndash;弹出一个loading层&ndash;&gt;-->
+<!--<button id="test4">弹出一个loading层</button>-->
+<!--&lt;!&ndash;弹出一个tips层&ndash;&gt;-->
+<!--<button id="test5">弹出一个tips层</button>-->
+
+
+<!--<p>layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）。-->
+    <!--若你采用layer.open({type: 1})方式调用，则type为必填项（信息框除外）</p>-->
+<!--<p>title支持三种类型的值，若你传入的是普通的字符串，如title :'我是标题'，那么只会改变标题文本；若你还需要自定义标题区域样式，-->
+    <!--那么你可以title: ['文本', 'font-size:18px;']，数组第二项可以写任意css样式；如果你不想显示标题栏，你可以title: false</p>-->
+<!--<p>content可传入的值是灵活多变的，类型：String/DOM/Array ,不仅可以传入普通的html内容，还可以指定DOM，更可以随着type的不同而不同</p>-->
+<!--你必须先引入jQuery1.8或以上版本-->
+<script src="../../js/jquery-1.8.3.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+$(function(){
+//    信息框
+    $("#test0").on("click",function(){
+        layer.open({
+            type:0,
+            title:"练习所用",
+            content:"hahahahah!"
+        })
+    });
+
+    $("#test1").on("click",function(){
+        layer.msg("Hello World!")
+    });
+
+    // 弹出页面层
+    $("#test2").on("click",function(){
+        layer.open({
+            type:1,
+            area:['600px','360px'],
+            shadeClose:true,  //点击遮罩关闭
+            content:'\<\div style="padding:20px;">自定义内容\<\/div>'
+        })
+    });
+
+    // 弹出一个iframe层
+    $("#test3").on("click",function(){
+        layer.open({
+            type:2,
+            title:'iframe父子操作',
+            area:['600px','360px'],
+            shadeClose:true,  //点击遮罩关闭
+            content:'iframe.html'
+        })
+    });
+
+    // 弹出一个loading层
+    $("#test4").on("click",function(){
+        var i=layer.load();
+        //  此处用setTimeout演示ajax的回调
+        setTimeout(function(){
+            layer.close(i);
+        },1500)
+    });
+
+    // id="test4"
+    $("#test5").on("click",function(){
+        layer.tips("Hello World","#test5")
+    });
+})
+</script>
+</body>
+</html>

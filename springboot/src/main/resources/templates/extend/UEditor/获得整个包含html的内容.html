@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p>arr.push("使用editor.getContent()方法可以获得编辑器的内容");</p>
+</div>
+<div style="width:800px;margin:20px auto 40px;">
+    <script id="container" type="text/plain" style="width:100%;height:100%"></script>
+</div>
+<div style="width:800px;margin:20px auto 40px;">
+    <button class="btn1">获取整个html内容</button>
+    <button class="btn2">获得内容</button>
+    <button class="btn3">写入内容</button>
+    <button class="btn4">获得纯文本</button>
+    <button class="btn5">获得带格式的纯文本</button>
+    <button class="btn6">判断是否有内容</button>
+    <button class="btn7">获得焦点</button>
+    <button class="btn8">取消焦点</button>
+    <button class="btn9">插入指定的内容</button>
+
+    <p >
+        <button class="btn10">不可编辑</button>
+        <button class="btn11" id="enable">可以编辑</button>
+        <button class="btn12" onclick="UE.getEditor('container').setHide()">隐藏编辑器</button>
+        <button class="btn13"  onclick="UE.getEditor('container').setShow()">显示编辑器</button>
+    </p>
+
+</div>
+</body>
+<script src="js/jquery-1.11.1.min.js"></script>
+<!-- 配置文件 -->
+<script src="js/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script src="js/ueditor/ueditor.all.js"> </script>
+<script src="js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+    $(function(){
+        var ue=UE.getEditor("container");
+
+        //  获取整个html内容
+        $(".btn1").on("click",function(){
+            alert(ue.getAllHtml());
+        })
+
+        //  获取整个内容
+        $(".btn2").on("click",function(){
+            alert(ue.getContent());
+        });
+
+        // 写入内容
+        $(".btn3").on("click",function(){
+            ue.setContent('xsacvsdv');
+        })
+
+        // 获得纯文本
+        $(".btn4").on("click",function(){
+            alert(ue.getContentTxt())
+        })
+
+        // 获得带格式的纯文本
+        $(".btn5").on("click",function(){
+            alert(ue.getPlainTxt())
+        })
+
+        // 判断是否有内容
+        $(".btn6").on("click",function(){
+            alert(ue.hasContents())
+        })
+
+        // 获得焦点
+        $(".btn7").on("click",function(){
+            ue.focus()
+        })
+
+        // 取消焦点
+        $(".btn8").on("click",function(){
+            ue.blur()
+        })
+
+        //  插入指定的内容
+        $(".btn9").on("click",function(){
+            var value=prompt("输入内容","");
+            ue.execCommand("insertHtml",value)
+        })
+
+        // 不可编辑
+        $(".btn10").on("click",function(){
+            ue.setDisabled("fullscreen");
+            disableBtn("enable");
+        })
+
+        // 可以编辑
+        $(".btn11").on("click",function(){
+            ue.setEnabled();
+            enableBtn();
+        })
+    })
+
+
+
+</script>
+
+</html>

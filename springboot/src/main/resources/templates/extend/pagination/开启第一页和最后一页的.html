@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>开启第一页和最后一页的按钮,并且内容可自定义。内容默认为1和总页数。（注：如coping为false，homePage和endPage无效。）</p>
+<div class="M-box2"></div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.pagination.js"></script>
+<script>
+    $('.M-box2').pagination({
+        coping:true,
+        homePage:'首页',
+        endPage:'末页',
+        prevContent:'上页',
+        nextContent:'下页'
+    });
+</script>
+</html>

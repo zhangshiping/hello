@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">animation</button>
+<p>类型：Number，默认：0</p>
+<p>我们的出场动画全部采用CSS3。这意味着除了ie6-9，其它所有浏览器都是支持的。
+    目前anim可支持的动画类型有0-6 如果不想显示动画，设置 anim: -1 即可。另外需要注意的是，3.0之前的版本用的是 shift 参数</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                type:0,
+                content:"xxxx",
+                anim:0
+            })
+
+        })
+    })
+</script>
+</html>

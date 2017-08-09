@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">icon</button>
+<p>类型：Number，默认：-1（信息框）/0（加载层）</p>
+<p>信息框默认不显示图标。当你想显示图标时，默认皮肤可以传入0-6如果是加载层，可以传入0-2。如：</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+           layer.alert("coo了！",{icon:1})
+            //eg2
+            //layer.msg('不开心。。', {icon: 5});
+            //eg3
+            //layer.load(2); //风格1的加载
+        })
+    })
+</script>
+</html>

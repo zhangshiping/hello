@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">yes</button>
+<p>类型：Function，默认：null</p>
+<p>该回调携带两个参数，分别为当前层索引、当前层DOM对象。</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                content: '测试回调',
+                yes: function(index, layero){
+                    //do something
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                }
+            });
+
+        })
+    })
+</script>
+</html>

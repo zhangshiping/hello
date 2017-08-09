@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>竖直线性时间轴代码</title>
+
+<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/responsive.css" type="text/css" media="screen">
+<link rel="stylesheet" href="inc/colorbox.css" type="text/css" media="screen">
+
+</head>
+<body>
+
+<div class="container">
+	<h1>新闻时间轴</h1>
+	<p class="lead"> 包含海量资讯的新闻服务 ,真实反映每时每刻的新闻热点。您可以查看新闻事件,了解它们的最新进展!</p>
+
+	<h2> NEWS </h2>
+
+
+
+	<div id="timelineContainer" class="timelineContainer">
+
+		<div class="timelineToggle"><p><a class="expandAll">+ 全部展开</a></p></div>
+		<br class="clear">
+		<br class="clear">
+	</div><!-- /#timelineContainer -->
+
+</div><!-- /.container -->
+
+<!-- GLOBAL CORE SCRIPTS -->
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="inc/colorbox.js"></script>
+<script type="text/javascript" src="js/timeliner.min.js"></script>
+<script src="../../js/handlebars.min.js"></script>
+<!--</script>-->
+<script>
+	$(document).ready(function() {
+
+	    $.post("/news/list",function(result){
+	        console.log(result);
+            var str="";
+	        var infor= result.data.list;
+	        console.log(infor);
+	        for(var i in infor){
+                str+="<div class='timelineMajor'>"+"<h2 class='timelineMajorMarker'><span>"+infor[i].stringUpdateTimeYear+"</span></h2>"
+				+"<d1 class='timelineMinor'><dt id="+infor[i].id+"><a>"+infor[i].title+"</a></dt>"+"<dd class='timelineEvent' style='display:none;'>" +
+						"<h3>"+infor[i].stringUpdateTime+"</h3>"+
+                    "<p>"+"<img style='width:240px;height:200px' src= ../../images/"+infor[i].picture+" />"+"</p>"+
+					"<p>"+infor[i].content+"</p>" +"<br class='clear'/>"+
+					"</dd>"+"</dl></div>"
+			}
+			$("#timelineContainer").append(str);
+		})
+		$.timeliner({
+			startOpen:['#3', '#4']
+		});
+		$.timeliner({
+			timelineContainer: '#timelineContainer_2'
+		});
+		// Colorbox Modal
+		$(".CBmodal").colorbox({inline:true, initialWidth:100, maxWidth:682, initialHeight:100, transition:"elastic",speed:750});
+	});
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<!--<p>适用浏览器：IE8、360、FireFox、Chrome、Safari、Opera、傲游、搜狗.</p>-->
+</div>
+</body>
+</html>

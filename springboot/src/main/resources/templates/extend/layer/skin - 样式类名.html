@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body .demo-class .layui-layer-title{background:#c00; color:#fff; border: none;}
+        body .demo-class .layui-layer-btn{border-top:1px solid #E9E7E7}
+        body .demo-class .layui-layer-btn a{background:#333;}
+        body .demo-class .layui-layer-btn .layui-layer-btn1{background:#999;}
+    </style>
+</head>
+<body>
+<button id="test">skin 样式</button>
+<p>类型：String，默认：''</p>
+<p>skin不仅允许你传入layer内置的样式class名，还可以传入您自定义的class名。这是一个很好的切入点，意味着你可以借助skin轻松完成不同的风格定制。
+    目前layer内置的skin有：layui-layer-lanlayui-layer-molv，未来我们还会选择性地内置更多，但更推荐您自己来定义。以下是一个自定义风格的简单例子</p>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+            layer.open({
+                skin: 'demo-class'
+            })
+        })
+    })
+</script>
+</html>

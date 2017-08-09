@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>参数：jump，开启跳转到第几页，跳转按钮文本内容可修改。（如果超出最大页数会变成总页数的值）</p>
+<div class="M-box3"></div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.pagination.js"></script>
+<script>
+    $('.M-box3').pagination({
+        pageCount:50,
+        jump:true,
+        coping:true,
+        homePage:'首页',
+        endPage:'末页',
+        prevContent:'上页',
+        nextContent:'下页'
+    });
+</script>
+</html>

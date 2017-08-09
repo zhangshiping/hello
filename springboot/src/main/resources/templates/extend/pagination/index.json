@@ -1,0 +1,12 @@
+{
+    "pageCount": 8,
+    "totalData":78,
+    "current":1,
+    "showData":10,
+    "prevContent":"上一页",
+    "nextContent":"下一页",
+    "activeCls":"active",
+    "count":2,
+    "coping":true,
+    "isHide":false
+  }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="test">获取content</button>
+<div id="divid" style="display: none">
+    <p>111</p>
+    <p>222</p>
+</div>
+<p>content可传入的值是灵活多变的，类型：String/DOM/Array ,不仅可以传入普通的html内容，还可以指定DOM，更可以随着type的不同而不同</p>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function(){
+        $("#test").on("click",function(){
+//            如果是页面层
+            layer.open({
+                type:1,
+                area:['300px','240px'],
+//                content: '传入任意的文本或html' //这里content是一个普通的String
+                content: $('#divid') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+
+            //Ajax获取
+            $.post('url', {}, function(str){
+                layer.open({
+                    type: 1,
+                    content: str //注意，如果str是object，那么需要字符拼接。
+                });
+            });
+
+//            如果是iframe层
+            layer.open({
+                type: 2,
+                content: 'http://sentsin.com' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            });
+
+//            如果是用layer.open执行tips层
+            layer.open({
+                type: 4,
+                content: ['内容', '#id'] //数组第二项即吸附元素选择器或者DOM
+            });
+
+        })
+    })
+</script>
+</body>
+</html>
