@@ -48,13 +48,13 @@
     <div class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3>添加新闻</h3>
+                <h3>编辑新闻</h3>
                 <div class="but-bor"></div>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <form class="myUploadForm">
+                        <form class="myUploadForm" method="post">
                             <div class="form-group">
                                 <label class="label-wid" for="news-title">新闻标题</label>
                                 <input type="text" class="form-control content-wid" id="news-title" name="title">
@@ -63,7 +63,8 @@
                             <div class="form-group" style="margin-top: 20px;">
                                 <label class="label-wid">新闻内容</label>
                                 <div class="news-content content-wid">
-                                    <script id="container" type="text/plain"></script>
+                                    <script id="container" type="text/plain">
+                                    </script>
                                 </div>
                             </div>
 
@@ -96,6 +97,7 @@
     <script>
         $(function(){
             var ue=UE.getEditor("container");
+            //  获取整个html内容
             function GetQueryString(name){
                 var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
                 var r = window.location.search.substr(1).match(reg);
@@ -123,7 +125,7 @@
                 height           :   "300px",                 // 宽度
                 itemWidth        :   "140px",                 // 文件项的宽度
                 itemHeight       :   "185px",                 // 文件项的高度
-                url              :   "/news/add",  // 上传文件的路径
+                url              :   "hbh",  // 上传文件的路径
                 fileType         :   ["jpg","png"],// 上传文件的类型
                 fileSize         :   51200000,                // 上传文件的大小
                 multiple         :   true,                    // 是否可以多个文件上传
@@ -132,22 +134,24 @@
                 del              :   true,                    // 是否可以删除文件
                 finishDel        :   false,  				  // 是否在上传文件完成后删除预览
                 /* 外部获得的回调接口 */
+
                 onSelect: function(selectFiles, allFiles){    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
                     console.info("当前选择了以下文件：");
                     console.info(selectFiles);
+
+
                 },
                 onDelete: function(file, files){              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
                     console.info("当前删除了此文件：");
                     console.info(file.name);
                     $(".add_upload").show(800)
                     $(".btns").show()
-
                 },
                 onSuccess: function(file, response){          // 文件上传成功的回调方法
                     console.info("此文件上传成功：");
                     console.info(file.name);
                     console.info("此文件上传到服务器地址：");
-                    console.info(response);
+//                    console.info(response);
                     var str="<p class='success-position'>文件上传成功！</p >";
                     $(".upload_append_list").append(str);
                     swal({
@@ -167,8 +171,6 @@
                     console.info(response);
                 }
             });
-
-
 
 
         })

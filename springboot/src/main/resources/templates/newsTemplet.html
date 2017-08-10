@@ -165,7 +165,7 @@
                 {{{content}}}
             </div>
             <div class="check" id="{{id}}">
-                <span style="color: #00a0e9;cursor: pointer;" class="newsadd">编辑</span>
+                <span style="color: #00a0e9;cursor: pointer;" class="editorNews">编辑</span>
                 <span style="color: red;cursor: pointer;" class="view-news-delete">删除</span>
             </div>
         </div>
@@ -179,9 +179,9 @@
             var template = Handlebars.compile($("#index-news-template").html());
             $('.news-content').append(template(result));
         })
-        $(".news-content").delegate(".newsadd","click",function(){
+        $(".news-content").delegate(".editorNews","click",function(){
             var _id=$(this).parent().attr("id");
-            window.location.href="newsadd.html?id="+_id;
+            window.location.href="editorNews.html?id="+_id;
             console.log(_id)
         })
         $(".news-content").delegate(".news-detail-title","click",function(){

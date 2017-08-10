@@ -129,8 +129,7 @@
                 onDelete: function(file, files){              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
                     console.info("当前删除了此文件：");
                     console.info(file.name);
-                    $(".add_upload").show(800)
-                    $(".btns").show()
+
                 },
                 onSuccess: function(file, response){          // 文件上传成功的回调方法
                     console.info("此文件上传成功：");
@@ -156,50 +155,7 @@
                     console.info(response);
                 }
             });
-            function GetQueryString(name){
-                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-                var r = window.location.search.substr(1).match(reg);
-                if(r!=null)return  unescape(r[2]); return null;
-            }
 
-            var num = GetQueryString("id");
-            console.log(num)
-            $.post("/news/detail?id="+num,function(result){
-                console.log(result);
-                $(".btns .webuploader_pick").html("替换文件")
-                $("#news-title").val(result.data.title);
-                $("#container").html(result.data.content)
-                $('#fileImage').change(function() {
-                    $("#rapidAddImg .uploadImg .upload_image").attr("src", "images/" + result.data.picture);
-                    if(list_length>=0){
-                        $(".add_upload").hide()
-                        $(".btns").hide()
-                    }
-                })
-//                for(var i in result.data.list){
-//                    if(result.data.list[i].id==num){
-////                        var ue=UE.getEditor("container");
-//                        $(".btns .webuploader_pick").html("替换文件")
-//                        $("#news-title").val(result.data.list[i].title);
-////                        ue.setContent(result.data.list[i].title);
-//                        //$("#container").html()
-//                        $("#rapidAddImg .uploadImg .upload_image").attr("src","images/"+result.data.list[i].picture)
-//                        $('#fileImage').change(function(){
-//                            ue.setContent(result.data.list[i].title);
-////                            $("#rapidAddImg .uploadImg .upload_image").attr("src",$('.upload_image').attr("src"))
-//                            var list_length=$(".upload_append_list").length
-//                            if(list_length>=0){
-//                                $(".add_upload").hide()
-//                                $(".btns").hide()
-//                            }
-//
-//                        });
-//
-//
-//                    }
-//
-//                }
-            })
         })
     </script>
 </body>

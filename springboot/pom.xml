@@ -10,8 +10,14 @@
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>1.7</java.version>
+        <!--<java.version>1.7</java.version>-->
         <oltu.version>1.0.2</oltu.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- set thymeleaf version -->
+        <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
+        <!--set java version-->
+        <java.version>1.8</java.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -37,11 +43,11 @@
             <scope>test</scope>
         </dependency>
         <!--======================================-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-            <!--&lt;!&ndash;<scope>test</scope>&ndash;&gt;-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <!--<scope>test</scope>-->
+        </dependency>
         <!--常用库依赖-->
         <dependency>
             <groupId>commons-codec</groupId>

@@ -154,7 +154,7 @@ var ZYFILE = {
 
 		var _form=document.querySelector(".myUploadForm");
 		var formdata = new FormData(_form);
-
+		console.log(_form)
 		formdata.append("file", file);
 
 		// var formdata;
