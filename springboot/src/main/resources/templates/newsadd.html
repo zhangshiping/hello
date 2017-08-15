@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>news-add</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="" name="author"/>
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
@@ -13,37 +11,6 @@
     <link href="css/style-responsive.css" rel="stylesheet"/>
     <link rel="stylesheet" href="extend/sweetAlert/css/sweetalert.css">
     <link rel="stylesheet" href="css/zyupload-1.0.0.css " type="text/css">
-
-    <style>
-        #container{
-            height: 150px;
-        }
-        .label-wid{
-            display: inline-block;
-            width: 20%;
-            text-align: right;
-            vertical-align: middle;
-            padding-top: 10px;
-            padding-right: 30px;
-        }
-        .content-wid{
-            display: inline-block;
-            width: 70%;
-            vertical-align: top;
-        }
-        .success-position{
-            color:red;
-            position: absolute;
-            left: 10px;
-            bottom: 0;
-            display: inline-block;
-            height: 20px;
-            width: 120px;
-            text-align: center;
-            line-height: 20px;;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-    </style>
 </head>
 <body style="background-color: white">
     <div class="content">
@@ -84,9 +51,6 @@
             </div>
         </div>
     </div>
-
-
-
 <script src="js/jquery-1.8.3.min.js"></script>
 <!-- 配置文件 -->
 <script src="extend/UEditor/ueditor/ueditor.config.js"></script>
@@ -98,15 +62,10 @@
     <script>
         $(function(){
             var ue=UE.getEditor("container");
-            //  获取整个html内容
-
             //  获取整个内容
             $(".btn2").on("click",function(){
                 alert(ue.getContent());
             });
-
-
-
             <!--文件上传-->
             $("#zyupload").zyUpload({
                 width            :   "70%",                 // 宽度
@@ -145,6 +104,10 @@
                         timer: 1200,
                         showConfirmButton: false  //是否显示确认按钮，默认为true
                     });
+                    setTimeout(function(){
+                        window.location.href="newsTemplet.html";
+                    },1500)
+
                 },
                 onFailure: function(file, response){          // 文件上传失败的回调方法
                     console.info("此文件上传失败：");
@@ -155,7 +118,6 @@
                     console.info(response);
                 }
             });
-
         })
     </script>
 </body>

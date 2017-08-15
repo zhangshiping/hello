@@ -4,25 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="" name="author"/>
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/style-responsive.css" rel="stylesheet"/>
     <link href="css/style-default.css" rel="stylesheet" id="style_color"/>
-    <style>
-        .news-header{
-
-        }
-        .img-box{
-            margin: 50px 0;
-        }
-        .date-box{
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body style="background-color: white">
 <div class="content">
@@ -59,7 +45,10 @@
                 <p>{{stringUpdateTime}}</p >
             </div>
             <div class="news-content">
-                {{content}}
+                {{{content}}}
+            </div>
+            <div class="news-content">
+                <a type="button" href="newsTemplet.html" class="btn btn-lg btn-info" >返 回</a>
             </div>
         </div>
 </script>

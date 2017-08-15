@@ -53,6 +53,6 @@ public class ShiroController {
             System.out.println("unautherized");
             return ResultGenerator.genFailResult("登录失败！");
         }
-        return ResultGenerator.genSuccessResult();
+        return ResultGenerator.genSuccessResult(token.toString());
     }
 }

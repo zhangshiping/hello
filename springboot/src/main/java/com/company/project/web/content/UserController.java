@@ -8,13 +8,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Condition;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +26,7 @@ UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public Result add(String username,String nickName,Integer sex,String password)
+    public Result add(String username, String nickName, Integer sex, String password)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
         User user = new User();
         if(username!=null || !"".equals(username)){
@@ -39,7 +36,7 @@ UserController {
             user.setNickName(nickName);
         }
         if(password!=null || !"".equals(password)){
-            user.setPassword(MD5Utils.EncoderByMd5(password));
+            user.setPassword( MD5Utils.EncoderByMd5(password));
         }
         if(sex!=null || !"".equals(sex)){
             user.setSex(sex);
@@ -92,9 +89,6 @@ UserController {
         if (StringUtils.isNotEmpty( nickName )){
             user.setNickName( nickName );
         }
-//        if (StringUtils.isNotEmpty( username )){
-//            user.setRegisterDate( registDate );
-//        }
         List<User> search = userService.search( user );
 
         PageInfo pageInfo = new PageInfo(search);

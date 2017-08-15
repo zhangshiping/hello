@@ -12,119 +12,7 @@
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/style-responsive.css" rel="stylesheet"/>
     <link href="css/style-default.css" rel="stylesheet" id="style_color"/>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .index-content-single {
-            width: 100%;
-            height: 133px;
-            margin-bottom: 40px;
-        }
-        .index-content-single .index-module-content-left {
-            width: 236px;
-            height: 133px;
-            margin-right: 53px;
-            float: left;
-            cursor: pointer;
-        }
-        .index-module-content-right {
-            width: 70%;
-            height: 133px;
-            float: left;
-            font-size: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-        .index-module-content-header {
-            font-size: 14px;
-            width: 100%;
-            line-height: 1.5;
-            display: block;
-            cursor: pointer;
-        }
-        .index-module-content-aside {
-            width: 100%;
-            height: 15px;
-            line-height: 15px;
-            color: #a3a3a3;
-            margin-bottom: 10px;
-            font-size: 12px;
-            position: relative;
-        }
-        .index-module-content-right .index-module-content-body {
-            color: #a3a3a3;
-            font-size: 14px;
-            width: 100%;
-            height: 60px;
-            position: absolute;
-            left: 0;
-            line-height: 1.55;
-            word-wrap: break-word;
-            overflow: hidden;
-        }
-        .index-module-content-header span {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        .index-module-content-header span:hover{
-            color: #54a7e8;
-        }
-        a {
-            text-decoration: none;
-            font-weight: bold;
-            color: inherit;
-        }
-        a:hover{
-            text-decoration: none;
-        }
-        .index-module-content-aside {
-            width: 100%;
-            height: 15px;
-            line-height: 15px;
-            color: #a3a3a3;
-            margin-bottom: 5px;
-            font-size: 12px;
-            position: relative;
-        }
-        .index-module-content-aside .date-icon {
-            width: 15px;
-            height: 15px;
-            left: 0;
-            top: 1px;
-        }
-        .index-module-content-aside span {
-            display: block;
-            width: 15px;
-            height: 15px;
-            line-height: 15px;
-            position: absolute;
-        }
-        .index-module-content-aside .date {
-            width: 183px;
-            left: 30px;
-            top: 3px;
-        }
-        .check{
-            display: block;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-        .check span{
-            display: inline-block;
-            height: 30px;
-            width: 100px;
-            text-align: center;
-            line-height: 39px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/sweetalert.css">
 </head>
 <body style="background-color: white">
 <div class="content">
@@ -145,6 +33,7 @@
 
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/handlebars.min.js"></script>
+<script src="extend/sweetAlert/js/sweetalert.min.js"></script>
 <script type="text/x-handlebars-template" id="index-news-template">
     {{#each data.list}}
     <div class="index-content-single">
@@ -165,7 +54,7 @@
                 {{{content}}}
             </div>
             <div class="check" id="{{id}}">
-                <span style="color: #00a0e9;cursor: pointer;" class="editorNews">编辑</span>
+                <span style="color: #00a0e9;cursor: pointer;" class="edit-new">编辑</span>
                 <span style="color: red;cursor: pointer;" class="view-news-delete">删除</span>
             </div>
         </div>
@@ -175,28 +64,50 @@
 <script>
     $(function(){
         $.post("/news/list",function(result){
-            console.log(result.data);
             var template = Handlebars.compile($("#index-news-template").html());
             $('.news-content').append(template(result));
         })
-        $(".news-content").delegate(".editorNews","click",function(){
+        $(".news-content").delegate(".edit-new","click",function(){
             var _id=$(this).parent().attr("id");
             window.location.href="editorNews.html?id="+_id;
-            console.log(_id)
+            console.log(_id);
         })
         $(".news-content").delegate(".news-detail-title","click",function(){
             var _id=$(this).parent().siblings(".check").attr("id");
-            console.log(_id);
             window.location.href="news-detail.html?id="+_id;
         })
+        // 删除
         $(".news-content").delegate(".view-news-delete","click",function(){
             var _id=$(this).parent().attr("id");
-            console.log(_id);
-            $.post("/news/delete?id="+_id,function(result){
-                if(result.code==200){
-                    alert("删除成功!");
-                    $(this).parents(".index-content-single").remove();
-                    window.location.reload();
+            swal({
+                title: "确定删除？",
+                text: "删除后将无法在相应业务端显示",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定删除",
+                cancelButtonText: "取消",
+                allowOutsideClick:true,  // 如果设置为true，用户点击弹窗外部可关闭弹窗
+                closeOnConfirm: false,
+                closeOnCancel: true  // cancel按钮是否默认关闭
+            },function(isConfirm){
+                if(isConfirm){
+                    $.post("/news/delete?id="+_id,function(result){
+                        if(result.code==200){
+                            swal({
+                                title: "删除！",
+                                text: "数据删除成功！",
+                                type: "success",
+                                timer: 1200,
+                                showConfirmButton: false
+                            });
+                            $(this).parents(".index-content-single").remove();
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1300)
+
+                        }
+                    })
                 }
             })
         })

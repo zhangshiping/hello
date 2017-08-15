@@ -8,20 +8,17 @@
     <meta content="" name="author"/>
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link href="assets/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet"/>
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/style-responsive.css" rel="stylesheet"/>
     <link href="css/style-default.css" rel="stylesheet" id="style_color"/>
     <link rel="stylesheet" href="css/sweetalert.css">
-    <link href="assets/fancybox/source/jquery.fancybox.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="assets/uniform/css/uniform.default.css"/>
 </head>
 <body style="background-color: white">
 <div class="content">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">新增用户</button>
+            <button type="button" id="btn-add-user" class="btn btn-info btn-lg" disabled="disabled" data-toggle="modal" data-target="#myModal">新增用户</button>
             <div class="but-bor"></div>
         </div>
         <div class="panel-body">
@@ -109,16 +106,7 @@
                             <div class="form-group">
                                 <label for="Ages">至:</label>
                                 <input type="number" name="AgeSecond" class="form-control" ng-minlength="1" ng-maxlength="3" id="Ages" ng-model="search.endAge" ng-change="AgeSecond()">
-                                <!--<p class="form-error" >-->
-                                    <!--<span ng-if="searchForm.AgeSecond.$valid"></span>-->
-                                    <!--<span ng-if="(searchForm.AgeSecond.$error.minlength||searchForm.AgeSecond.$error.maxlength)&&searchForm.AgeSecond.$touched">-->
-                                <!--请输入1-100的整数-->
-                                <!--</span>-->
-                                    <!--<span ng-show="ageSecond">应该大于等于第一个年龄</span>-->
-                                <!--</p>-->
-                                <!--<span ng-hide="First">-->
-                                    <!--请输入1-100的整数-->
-                                <!--</span>-->
+
                             </div>
                         </div>
                     </div>
@@ -149,9 +137,9 @@
             </div>
             <div class="row btn-row">
                 <div class="col-md-5  col-sm-6">
-                    <bunton class="btn btn-success btn-lg enabled-row">启&nbsp;用</bunton>
-                    <bunton class="btn btn-warning btn-lg btn-mar-left" ng-click="Disable()">禁&nbsp;用</bunton>
-                    <bunton class="btn btn-danger btn-lg btn-mar-left delete-row">删&nbsp;除</bunton>
+                    <!--<bunton class="btn btn-success btn-lg enabled-row">启&nbsp;用</bunton>-->
+                    <!--<bunton class="btn btn-warning btn-lg btn-mar-left" ng-click="Disable()">禁&nbsp;用</bunton>-->
+                    <button type="button" disabled="disabled" class="btn btn-danger btn-lg btn-mar-left delete-row" id="btn-delete-user">删&nbsp;除</button>
                 </div>
                 <div class="col-md-4 col-sm-6 pull-right" style="text-align: right;">
                     <button type="button" class="btn btn-info btn-lg" style="margin-left: 10px;">
@@ -173,6 +161,7 @@
                         <th>昵称</th>
                         <th>性别</th>
                         <th>注册时间</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody class="tbody">
@@ -328,7 +317,15 @@
                         <div class="col-md-6 ">
                             <div class="form-group">
                                 <label for="Vpassword">密码:</label>
-                                <input type="password" id="Vpassword" class="form-control" disabled="disabled">
+                                <input type="text" id="Vpassword" class="form-control" disabled="disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-model-row" style="padding: 10px 20px 0">
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label for="VstringRegisterDate">登录时间:</label>
+                                <input type="text" id="VstringRegisterDate" class="form-control" disabled="disabled">
                             </div>
                         </div>
                     </div>
@@ -343,9 +340,7 @@
 </body>
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-<script type="text/javascript" src="assets/jquery-slimscroll/jquery-ui-1.9.2.custom.min.js"></script>
-<script type="text/javascript" src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="extend/layer/js/layer.js"></script>
 <script src="extend/sweetAlert/js/sweetalert.min.js"></script>
 <script src="js/jquery.pagination.js"></script>
@@ -354,17 +349,36 @@
         var curPage="";
         var rootUrl="user/list";
         var url=rootUrl;
+        //   获取权限
+        function getPermission(){
+            var permiss=JSON.parse(localStorage.getItem("info"));
+            console.log(permiss);
+            $(".editor").removeAttr("data-toggle");
+            $(".editor").removeAttr("data-target");
+            for(var j=0;j<permiss.roles.length;j++){
+                var permissionList=permiss.roles[j].permissions;
+                for(var i=0;i<permissionList.length;i++){
+                    if(permissionList[i].permission=="user:create"){
+                        $("#btn-add-user").removeAttr("disabled");
+                    }
 
+                    if(permissionList[i].permission=="user:delete"){
+                        $("#btn-delete-user").removeAttr("disabled");
+                    }
+
+                    if(permissionList[i].permission =="user:edit"){
+                        $(".editor").attr("data-toggle","modal");
+                        $(".editor").attr("data-target","#myModal1");
+                    }
+                }
+            }
+        }
         function viewList(){
             var str="";
             var userList=[];
             $.post(url,function(result){
-                console.log(result)
-                console.log(result.data);
                 userList=result.data.list;
-                console.log(userList);
                 curPage=result.data.pageNum;
-                console.log(curPage);
                 for(var i in userList){
                     if(userList[i].sex==0){
                         userList[i].sex="女"
@@ -375,9 +389,11 @@
                         "<td>"+userList[i].username+"</td><td>"+userList[i].nickName+"</td><td>"+userList[i].sex+"</td>" +
                         "<td>"+userList[i].stringRegisterDate+"</td> " +
                         "<td>"+"<span class='view-detail'  data-toggle='modal' data-target='#myModal2'>查看详情</span>"+
-                        "<span class='editor' data-toggle='modal' data-target='#myModal1'>修改</span>"+"</td></tr>"
+                        "<span class='editor'  data-toggle='modal' data-target='#myModal1'>修改</span>"+"</td></tr>"
                 }
                 $(".tbody").append(str);
+                getPermission();
+                // 分页
                 $(".pageBox").pagination({
                     prevCls:"preClass",
                     nextCls:"nextClass",
@@ -395,20 +411,15 @@
                 });
                 $(".pageBox").delegate("a","click",function(){
                     if($(this).hasClass("nextClass")){
-                        console.log(curPage);
                         $(".tbody").find("tr").remove();
                         url=rootUrl+"?page="+(curPage*1+1*1);
-                        console.log(url);
                         viewList();
                     }else
                     if($(this).hasClass("preClass")){
-                        console.log(curPage);
                         $(".tbody").find("tr").remove();
                         url=rootUrl+"?page="+(curPage*1-1*1);
-                        console.log(url);
                         viewList();
                     }else{
-                        console.log(url);
                         $(".tbody").find("tr").remove();
                         url=rootUrl+"?page="+$(this).attr("data-page");
                         viewList();
@@ -417,18 +428,8 @@
 
             })
         }
-
-
         viewList();
 
-//        $(".pageBox").find(".nextClass").click(function () {
-//            console.log("1111");
-//            console.log(curPage);
-//             url=rootUrl+"?page="+curPage+1;
-//             console.log(url);
-//            viewList();
-//        });
-        console.log($(".pageBox").find(".nextClass").html())
         //  全选、反选
         $(".check-all").on("click",function(){
             console.log(curPage);
@@ -446,7 +447,6 @@
                     checkedBox.push($(this).siblings(".hide-id").text())
                 }
             });
-            console.log(checkedBox);
             if(checkedBox.length==0){
                 swal({
                     title: "",
@@ -471,22 +471,46 @@
                     closeOnCancel: true  // cancel按钮是否默认关闭
                 }, function(isConfirm){
                     if (isConfirm) {
-                        $.post("user/delete?id="+checkedBox[0],function(data){
-                            if(data.message="SUCCESS"){
-                                swal({
-                                    title: "删除！",
-                                    text: "数据删除成功！",
-                                    type: "success",
-                                    timer: 1200,
-                                    showConfirmButton: false
-                                });
-                                $(".tbody").find(".hide-id").each(function(){
-                                    if($(this).text()==checkedBox[0]){
-                                        $(this).parents("tr").remove();
-                                    }
-                                })
+                        $.ajax({
+                            header:{
+                                token:localStorage.getItem("token")
+                            },
+                            method:"post",
+                            url:"user/delete?id="+checkedBox[0],
+                            dataType:"json",
+                            success:function(data){
+                                if(data.message="SUCCESS"){
+                                    swal({
+                                        title: "删除！",
+                                        text: "数据删除成功！",
+                                        type: "success",
+                                        timer: 1200,
+                                        showConfirmButton: false
+                                    });
+                                    $(".tbody").find(".hide-id").each(function(){
+                                        if($(this).text()==checkedBox[0]){
+                                            $(this).parents("tr").remove();
+                                        }
+                                    })
+                                }
                             }
                         })
+//                        $.post("user/delete?id="+checkedBox[0],function(data){
+//                            if(data.message="SUCCESS"){
+//                                swal({
+//                                    title: "删除！",
+//                                    text: "数据删除成功！",
+//                                    type: "success",
+//                                    timer: 1200,
+//                                    showConfirmButton: false
+//                                });
+//                                $(".tbody").find(".hide-id").each(function(){
+//                                    if($(this).text()==checkedBox[0]){
+//                                        $(this).parents("tr").remove();
+//                                    }
+//                                })
+//                            }
+//                        })
                     }
                 });
             }
@@ -501,6 +525,7 @@
                 $("#VnickName").val(result.data.nickName);
                 $("#Vpassword").val(result.data.password);
                 $("#Vsex").val(result.data.sex);
+                $("#VstringRegisterDate").val(result.data.stringRegisterDate);
             })
         });
         // 添加用户
@@ -517,8 +542,6 @@
                 },
                 dataType:"json",
                 success:function(result){
-                    console.log(result);
-
                     if(result.message=="SUCCESS"){
                         swal({
                             title: "新增用户",
@@ -530,7 +553,6 @@
                     }
                     $(".tbody").empty();
                     viewList();
-
                 },
                 error:function(msg){
                     console.log(msg)
@@ -538,46 +560,6 @@
             })
         })
 
-        // 启用
-        $(".enabled-row").on("click",function(){
-            var enabledBox=[];
-            $(".tbody").find("input[type=checkbox]").each(function(){
-                if($(this).is(":checked")){
-                    enabledBox.push($(this).siblings(".hide-id").text())
-                }
-            });
-            console.log(enabledBox);
-            if(enabledBox.length==0){
-                swal({
-                    title: "",
-                    text: "<p style='font-size: 18px;color: #c43c35;line-height: 25px;'>请先选中再操作！</p>",
-                    type:"error",
-                    timer: 1200,
-                    html:true,
-                    showConfirmButton: false  //是否显示确认按钮，默认为true
-                });
-                return false;
-            }else if(enabledBox.length==1){
-                swal({
-                        title: "确定启用该用户？",
-                        text: "启用过后，用户可以在相应的业务端pp正常登录",
-                        type: "warning",         // icon类型
-                        showCancelButton: true,  // 是否显示cancel按钮，默认true
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "确定启用",
-                        cancelButtonText: "取消",
-                        closeOnConfirm: false,    // 确定按钮是否关闭alert层
-                        allowOutsideClick:true  // 如果设置为true，用户点击弹窗外部可关闭弹窗
-                    },
-                    function(){
-                        $.post("user/update?id="+enabledBox[0],function(data){
-                            console.log(data);
-                        })
-//                        swal("删除！", "你的虚拟文件已经被删除。", "success");
-                    });
-            }
-        })
-        //修改
         $(".tbody").delegate('.editor',"click",function(){
             var _id=$(this).parent().siblings().eq(0).find(".hide-id").text();
             console.log(_id);
@@ -615,10 +597,6 @@
                                 timer: 1200,
                                 showConfirmButton: false  //是否显示确认按钮，默认为true
                             });
-//                            window.location.reload();
-//                            setTimeout(function(){
-//                                window.location.reload();
-//                            }, 2000);
                             $(".tbody").find("tr").each(function(){
                                 if($(this).find(".hide-id").text()==_id){
                                     $(this).children("td").eq(1).text($("#names").val());

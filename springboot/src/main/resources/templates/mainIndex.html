@@ -10,8 +10,6 @@
     <meta charset="utf-8"/>
     <title>响应式后台管理系统</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="Mosaddek" name="author"/>
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
@@ -306,6 +304,7 @@
                         <li><a class="" href="extend/timeLine/index.html" target="MainIframe">时间线</a></li>
                         <li><a class="" href="newsTemplet.html" target="MainIframe">图文列表</a></li>
                         <li><a class="" href="news-list.html" target="MainIframe">新闻列表</a></li>
+                        <li><a id="roles-manegement" href="roles-management.html" target="MainIframe">角色管理</a></li>
                         <li><a class="" href="ueditor.html" target="MainIframe">富文本编辑器</a></li>
                         <li><a class="" href="extend/zyUpload/demo.basic.html" target="MainIframe">文件上传预览</a></li>
                         <li><a class="" href="sweet-alert.html" target="MainIframe">sweetAlert弹出层</a></li>
@@ -427,6 +426,15 @@
                 (this).setAttribute("href","Error404.html");
             }
         });
+        var permiss=JSON.parse(localStorage.getItem("info"));
+//        console.log(permiss);
+        if(permiss.username=="test"){
+            $("#roles-manegement").on("click",function(event){
+                event.preventDefault();
+            })
+        }else{
+//            console.log(111)
+        }
     })
 </script>
 <!-- ie8 fixes -->

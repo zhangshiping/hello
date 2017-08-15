@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.RolesPermissionsMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.RolesPermissions">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="roles_id" jdbcType="VARCHAR" property="rolesId" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+  </resultMap>
+  <select id="selectedPermissionsByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        d.*
+    FROM
+        users a,
+        user_roles b,
+        roles c,
+        roles_permissions d
+    WHERE
+        a.id=b.users_id
+    AND b.roles_id=c.id
+    AND c.id=d.roles_id
+    AND a.id=#{id}
+  </select>
+
+    <select id="selectedPermissionsByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM roles_permissions WHERE roles_id=#{id}
+    </select>
+</mapper>

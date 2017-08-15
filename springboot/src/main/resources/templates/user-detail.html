@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userDetail</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <link href="css/style-default.css" rel="stylesheet" id="style_color"/>
+</head>
+<body style="background-color: white;">
+<div class="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>用户详情</h3>
+            <div class="but-bor"></div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="user-detail col-md-6">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/handlebars.min.js"></script>
+<script type="text/x-handlebars-template" id="index-user-detail">
+    <div class="user-header">
+        <h4>用户名：{{username}}</h4>
+    </div>
+    <div class="news-body">
+       <h4>用户昵称：{{nickName}}</h4>
+        <h4>性别：{{sex}}</h4>
+        <h4>注册时间：{{stringRegisterDate}}</h4>
+        <div><span class="go-back">返回</span></div>
+    </div>
+</script>
+<script>
+    $(function(){
+        function GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  // window.location.search 会返回所有地址栏从“?”开始的字符串。
+            var r = window.location.search.substr(1).match(reg);//substr()从指定位置提取字符串
+            if(r!=null)return  unescape(r[2]); return null;
+        };
+        var num = parseInt(GetQueryString("id"));
+        $.post("user/detail?id="+num,function(result){
+            console.log(result.data);
+            var template = Handlebars.compile($("#index-user-detail").html());
+            $('.user-detail').append(template(result.data));
+        })
+        $(".go-back").on("click",function(){
+            window.location.href="user-list.html"
+        })
+    })
+</script>
+</html>

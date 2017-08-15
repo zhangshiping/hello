@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.RolesMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.Roles">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="guid" jdbcType="VARCHAR" property="guid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="archived" jdbcType="BIT" property="archived" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <select id="selecteByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        c.*
+    FROM
+        users a,
+        user_roles b,
+        roles c
+    WHERE
+        a.id=b.users_id
+    AND b.roles_id=c.id
+    AND a.id=#{id}
+  </select>
+</mapper>

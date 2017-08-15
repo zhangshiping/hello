@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <link href="css/style-default.css" rel="stylesheet" id="style_color"/>
+    <link rel="stylesheet" href="css/sweetalert.css">
+</head>
+<body style="background-color: white">
+<div class="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>修改角色</h3>
+            <div class="but-bor"></div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" style="display: inline-block;width: 20%;text-align: left">角色名称:</label>
+                            <input type="text" class="form-control roleName" id="name" name="roleName" style="display: inline-block;width: 79%">
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <input type="text" class="form-control role-id">
+                        </div>
+                        <div class="form-group">
+                            <table class="permission-list table table-bordered table-hover table-striped">
+
+                            </table>
+                        </div>
+                        <div class="form-group" style="margin-top: -25px;">
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0"> 不存档
+                            </label>
+                            <label class="radio-inline" style="margin-left: 20px;">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1"> 存档
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success btn-role-editor">修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="extend/sweetAlert/js/sweetalert.min.js"></script>
+<script>
+    $(function(){
+        function GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        var num =GetQueryString("id");
+        var total=[];
+        // 获取权限列表
+        $.get("/authorize/permissionsList",function(result){
+            var str="";
+            for(var i in result){
+                str+="<tr><td style='width: 10%;text-align: center'>"+"<input type='checkbox' id="+result[i].id+" />"+"</td>" +
+                    "<td>"+result[i].permission+"</td></tr>";
+                total.push(result[i].id);
+            }
+            console.log(total);
+            $(".permission-list").append(str);
+            // 获取当前角色的权限
+            $.get("/authorize/queryRolesPermissionsById?roleId="+num,function(result1){
+                console.log(result1);
+                for(var i in result1){
+                    if(total.indexOf(result1[i].id)>=0){
+                        console.log("xxxx");
+                        $("#"+result1[i].id).prop("checked","checked");
+                    }else{
+                        $("#"+result1[i].id).prop("checked","");
+                    }
+                };
+
+            })
+        })
+        // 获取角色名称
+        $.get("/authorize/queryRolesById?roleId="+num,function(result){
+            console.log(result);
+            $(".roleName").val(result.roleName);
+            $(".role-id").val(result.id);
+            $(".form-group").find()
+            if(result.archived=="false"){
+                $("#inlineRadio1").prop("checked","checked")
+            }else{
+                $("#inlineRadio2").prop("checked","checked")
+            }
+        })
+
+        //   点击修改
+        $(".btn-role-editor").on("click",function(){
+            var permissionId=[];
+            if($(".roleName").val()==""){
+                alert("角色名称不能为空!");
+                return false
+            }
+            $(".permission-list").find("input[type=checkbox]").each(function(){
+                if($(this).is(":checked")){
+                    permissionId.push($(this).attr("id"));
+                }
+            });
+            if(permissionId.length!=0){
+                $.ajax({
+                    url:"/authorize/updateRoles",
+                    type:"post",
+                    traditional: true,
+                    data:{
+                        rolesId:$(".role-id").val(),
+                        roleName:$(".roleName").val(),
+                        archived:$(".form-group").find("input[type=radio]:checked").val(),
+                        permissionIds:permissionId
+                    },
+                    success:function(data){
+                        console.log(data);
+                        if(data.code==200){
+                            swal({
+                                title: "",
+                                text: "角色修改成功！",
+                                type: "success",
+                                timer: 1200,
+                                showConfirmButton: false
+                            });
+                            setTimeout(function(){
+                                window.location.href="roles-management.html";
+                            },1500)
+                        }else{
+                            swal({
+                                title: "",
+                                text: "修改角色失败，请重试！",
+                                type:"error",
+                                timer: 1500,
+                                showConfirmButton: false  //是否显示确认按钮，默认为true
+                            });
+                        }
+                    }
+                });
+            }else{
+                swal({
+                    title: "",
+                    text: "请先选择权限！",
+                    type:"error",
+                    timer: 1500,
+                    showConfirmButton: false  //是否显示确认按钮，默认为true
+                });
+                return;
+            }
+        })
+
+    })
+</script>
+</html>

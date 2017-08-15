@@ -21,9 +21,9 @@ public class CodeGenerator {
 //    private static final String JDBC_PASSWORD = "123456a";
 //    private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3307/test";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/springboot";
     private static final String JDBC_USERNAME = "root";
-    private static final String JDBC_PASSWORD = "admin";
+    private static final String JDBC_PASSWORD = "";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
     private static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
@@ -40,16 +40,18 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-//        genCode("user");
-//        genCode("news");
+//        genCode("users");
+//        genCode("roles");
+//        genCode("roles_permissions");
+        genCode("permissions");
     }
 
     public static void genCode(String... tableNames) {
         for (String tableName : tableNames) {
             //根据需求生成，不需要的注掉，模板有问题的话可以自己修改。
             genModelAndMapper(tableName);
-            genService(tableName);
-            genController(tableName);
+//            genService(tableName);
+//            genController(tableName);
         }
     }
 

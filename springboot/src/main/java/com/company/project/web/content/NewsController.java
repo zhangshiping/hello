@@ -4,17 +4,13 @@ import com.company.project.core.ResultGenerator;
 import com.company.project.infrastructure.tools.UploadUtils;
 import com.company.project.model.News;
 import com.company.project.service.NewsService;
-import com.company.project.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.util.StringUtil;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
@@ -100,7 +96,7 @@ public class NewsController {
         return ResultGenerator.genSuccessResult(pageInfo);
     }
     @PostMapping("/search")
-    public Result search(String title,Date updateTimeMax , Date updateTimeMin) {
+    public Result search(String title, Date updateTimeMax , Date updateTimeMin) {
         News news = new News();
         if (StringUtils.isNotEmpty( title )){
             news.setTitle( title );
